@@ -29,10 +29,6 @@ install_rclone() {
     local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${os}-amd64.zip"
     local source_path="${install_path}/bin/rclone.zip"
 
-    if [ ! -d "${install_path}/bin" ]; then
-        mkdir -p "${install_path}/bin"
-    fi
-
     curl --silent --location --create-dirs --output "$source_path" "$download_url"
     unzip -j "$source_path"
     chmod +x "${install_path}/bin/rclone"
