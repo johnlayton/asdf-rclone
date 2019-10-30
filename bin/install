@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+install_rclone() {
+    local install_type=$1
+    local version=$2
+    local install_path=$3
+
+    if [ "$install_type" != "version" ]; then
+      fail "asdf-deno supports release installs only"
+    fi
+
+    local platform
+
+    case "$OSTYPE" in
+      darwin*) platform="osx" ;;
+      linux*) platform="linux" ;;
+      *) fail "Unsupported platform" ;;
+    esac
+
+    local architecture
+
+    case "$(uname -m)" in
+      x86_64) architecture="x64" ;;
+      *) fail "Unsupported architecture" ;;
+    esac
+
+    local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${os}-amd64.zip"
+    local source_path="${install_path}/bin/rclone.zip"
+
+    if [ ! -d "${install_path}/bin" ]; then
+        mkdir -p "${install_path}/bin"
+    fi
+
+    curl --silent --location --create-dirs --output "$source_path" "$download_url"
+    gunzip "$source_path"
+    chmod +x "${install_path}/bin/rclone"
+}
+
+install_rclone $ASDF_INSTALL_TYPE $ASDF_INSTALL_VERSION $ASDF_INSTALL_PATH
+
+asdf reshim rclone "$ASDF_INSTALL_VERSION"
