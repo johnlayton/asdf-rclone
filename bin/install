@@ -29,7 +29,7 @@ install_rclone() {
     echo "             to ... $source_path"
 
     curl --silent --location --create-dirs --output "$source_path" "$download_url"
-    unzip -j "$source_path"
+    unzip -j "$source_path" -d "${install_path}/bin"
     chmod +x "${install_path}/bin/rclone"
 }
 
