@@ -34,7 +34,7 @@ install_rclone() {
     fi
 
     curl --silent --location --create-dirs --output "$source_path" "$download_url"
-    gunzip "$source_path"
+    unzip -j "$source_path"
     chmod +x "${install_path}/bin/rclone"
 }
 
