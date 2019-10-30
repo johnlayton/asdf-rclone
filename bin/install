@@ -4,12 +4,8 @@ set -eo pipefail
 
 install_rclone() {
     local install_type=$1
-    local version=$2
+    local install_version=$2
     local install_path=$3
-
-    if [ "$install_type" != "version" ]; then
-      fail "asdf-deno supports release installs only"
-    fi
 
     local platform
 
@@ -26,8 +22,11 @@ install_rclone() {
       *) fail "Unsupported architecture" ;;
     esac
 
-    local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${os}-amd64.zip"
+    local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${platform}-amd64.zip"
     local source_path="${install_path}/bin/rclone.zip"
+
+    echo "Download rclone ... $download_url"
+    echo "             to ... $source_path"
 
     curl --silent --location --create-dirs --output "$source_path" "$download_url"
     unzip -j "$source_path"
