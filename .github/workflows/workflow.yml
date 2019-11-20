@@ -1,4 +1,4 @@
-name: Main workflow
+name: main
 
 on: [push, pull_request]
 
