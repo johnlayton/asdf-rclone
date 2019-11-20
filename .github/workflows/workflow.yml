@@ -1,0 +1,52 @@
+name: Main workflow
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        rclone: [1.50.2]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install asdf
+        run: git clone https://github.com/asdf-vm/asdf.git $HOME/asdf
+
+      - name: Install Rclone and print version
+        run: |
+          . $HOME/asdf/asdf.sh
+          asdf plugin-add rclone $GITHUB_WORKSPACE
+          asdf install rclone ${{ matrix.rclone }}
+          asdf global rclone ${{ matrix.rclone }}
+          rclone --version
+  test:
+    runs-on: macOS-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Install asdf
+        run: git clone https://github.com/asdf-vm/asdf.git $HOME/asdf
+
+      - name: Test plugin
+        env:
+          GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          . $HOME/asdf/asdf.sh
+          asdf plugin-test rclone $GITHUB_WORKSPACE 'rclone --version' --asdf-tool-version ${{matrix.rclone}}
+#          asdf plugin-add rclone $GITHUB_WORKSPACE
+#          bats test
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Run ShellCheck
+        run: shellcheck bin/*
