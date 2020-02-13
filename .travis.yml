@@ -1,8 +1,0 @@
-language: c
-script: asdf plugin-test rclone https://github.com/johnlayton/jimbacourt.git 'rclone --version' --asdf-tool-version 1.50.0
-before_script:
-  - git clone https://github.com/asdf-vm/asdf.git
-  - . asdf/asdf.sh
-os:
-  - linux
-  - osx
