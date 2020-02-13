@@ -23,5 +23,3 @@ install_rclone() {
 }
 
 install_rclone "$ASDF_INSTALL_TYPE" "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
-
-asdf reshim rclone "$ASDF_INSTALL_VERSION"
