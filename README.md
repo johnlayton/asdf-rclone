@@ -1,4 +1,4 @@
-# jimbacourt
+# asdf-rclone
 
 [![Build Status](https://github.com/johnlayton/asdf-rclone/workflows/main/badge.svg)](https://github.com/johnlayton/asdf-rclone/actions)
 
