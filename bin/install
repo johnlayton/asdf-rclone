@@ -8,10 +8,21 @@ install_rclone() {
 
     local platform
 
-    case "$OSTYPE" in
-      darwin*) platform="osx" ;;
-      linux*) platform="linux" ;;
+    case "$(uname -s)" in
+      Darwin) platform="osx" ;;
+      Linux) platform="linux" ;;
       *) fail "Unsupported platform" ;;
+    esac
+
+    case "$(uname -m)" in
+      i?86) architecture="386" ;;
+      x86_64) architecture="amd64" ;;
+      arm64|aarch64|armv8l) architecture="arm64" ;;
+      armv7l) architecture="arm-v7" ;;
+      arm*) architecture="arm" ;;
+      mips) architecture="mips" ;;
+      mipsel) architecture="mipsle" ;;
+      *) fail "Unsupported architecture" ;;
     esac
 
     local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${platform}-amd64.zip"
