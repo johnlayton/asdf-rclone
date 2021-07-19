@@ -25,7 +25,7 @@ install_rclone() {
       *) fail "Unsupported architecture" ;;
     esac
 
-    local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${platform}-amd64.zip"
+    local download_url="https://github.com/rclone/rclone/releases/download/v${install_version}/rclone-v${install_version}-${platform}-${architecture}.zip"
     local source_path="${install_path}/bin/rclone.zip"
 
     curl --silent --location --create-dirs --output "$source_path" "$download_url"
